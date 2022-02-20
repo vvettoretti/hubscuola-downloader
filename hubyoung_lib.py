@@ -48,9 +48,9 @@ class HubYoung:
     def get_library(self):
         return self.session.get("https://ms-api.hubscuola.it/getLibrary/young").json()
 
-    def download_book(self, book_id,output_name):
+    def download_book(self, book_id, output_name):
         publication = self.session.get(
-             "https://ms-mms.hubscuola.it/downloadPackage/{}/publication.zip?tokenId={}".format(book_id, self.token))
+            "https://ms-mms.hubscuola.it/downloadPackage/{}/publication.zip?tokenId={}".format(book_id, self.token))
         with zipfile.ZipFile(
                 io.BytesIO(publication.content)) as archive:  # Sqlite cannot open db file from bytes stream
             archive.extract("publication/publication.db")
@@ -64,7 +64,7 @@ class HubYoung:
         for chapter in json.loads(query[0])['indexContents']['chapters']:
             chapter_urls.append(
                 "https://ms-mms.hubscuola.it/public/{}/{}.zip?tokenId={}&app=v2".format(book_id, chapter["chapterId"],
-                                                                                     self.token))
+                                                                                        self.token))
         pages = []
         for url in chapter_urls:
             documents = self.session.get(url)
@@ -73,6 +73,4 @@ class HubYoung:
                     if ".pdf" in file:
                         with archive.open(file) as f:
                             pages.append(f.read())
-        merge_pdf(pages,output_name)
-
-
+        merge_pdf(pages, output_name)

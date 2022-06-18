@@ -69,7 +69,7 @@ class HubYoung:
         for url in chapter_urls:
             documents = self.session.get(url)
             with zipfile.ZipFile(io.BytesIO(documents.content)) as archive:
-                for file in archive.namelist():
+                for file in sorted(archive.namelist()):
                     if ".pdf" in file:
                         with archive.open(file) as f:
                             pages.append(f.read())

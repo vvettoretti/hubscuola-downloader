@@ -58,6 +58,9 @@ class HubYoung:
         cursor = db.cursor()
         query = cursor.execute("SELECT offline_value FROM offline_tbl WHERE offline_path=?",
                                ("meyoung/publication/" + book_id,)).fetchone()
+        
+        db.close()
+        
         shutil.rmtree("./publication")
 
         chapter_urls = []

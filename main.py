@@ -24,4 +24,4 @@ for book in library:
 for book in books_to_download:
     print(f"Downloading {book['title']}... (this may take a while)")
     book["title"] =  unicodedata.normalize('NFD', book["title"].lower().replace(' ', '_')).encode('ascii', 'ignore')
-    h.download_book(str(book["id"]), str(book["id"]) + "_" + book["title"] + ".pdf")
+    h.download_book(str(book["id"]), str(book["id"]) + "_" + book["title"].decode("ascii") + ".pdf")
